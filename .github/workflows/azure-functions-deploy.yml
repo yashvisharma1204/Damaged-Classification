@@ -1,22 +1,24 @@
-name: Deploy Azure Function (Flex)
+name: Deploy Azure Function
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout Code
+      uses: actions/checkout@v2
 
     - name: Setup Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.10'
 
-    - name: Install dependencies
+    - name: Install Requirements
       run: pip install -r requirements.txt
 
     - name: Azure Login
@@ -24,10 +26,8 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    - name: Deploy to Azure Functions
-      uses: azure/functions-action@v1
+    - name: Deploy Function App
+      uses: Azure/functions-action@v1
       with:
-        app-name: damagedimagesFunction
-        slot-name: Production
-        package: .
-
+        app-name: 'damagedimagesFunction'
+        package: '.'
