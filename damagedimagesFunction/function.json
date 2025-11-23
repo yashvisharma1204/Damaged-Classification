@@ -1,20 +1,26 @@
 {
+  "scriptFile": "__init__.py",
+  "entryPoint": "main",
   "bindings": [
     {
-      "name": "inputBlob",
-      "type": "blobTrigger",
+      "type": "eventGridTrigger",
       "direction": "in",
-      "path": "incoming-images/{name}",
-      "connection": "AzureWebJobsStorage"
+      "name": "inputEvent"
+    },
+    {
+      "type": "blob",
+      "connection": "AzureWebJobsStorage",
+      "direction": "in",
+      "name": "inputBlob",
+      "path": "{data.url}"
     },
     {
       "type": "cosmosDB",
       "name": "outputDocument",
+      "direction": "out",
       "databaseName": "damageDB",
-      "collectionName": "results",
-      "createIfNotExists": true,
-      "connectionStringSetting": "CosmosDBConnection",
-      "direction": "out"
+      "collectionName": "damageCollection",
+      "connectionStringSetting": "CosmosConnection"
     }
   ]
 }
