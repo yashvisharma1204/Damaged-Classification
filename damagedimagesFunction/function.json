@@ -1,17 +1,20 @@
 {
-    "scriptFile": "__init__.py",
-    "bindings": [
-        {
-            "authLevel": "anonymous",
-            "type": "httpTrigger",
-            "direction": "in",
-            "methods": ["get"],
-            "name": "req"
-        },
-        {
-            "type": "http",
-            "direction": "out",
-            "name": "$return"
-        }
-    ]
+  "bindings": [
+    {
+      "name": "inputBlob",
+      "type": "blobTrigger",
+      "direction": "in",
+      "path": "images/{name}",
+      "connection": "AzureWebJobsStorage"
+    },
+    {
+      "type": "cosmosDB",
+      "name": "outputDocument",
+      "databaseName": "damageDB",
+      "collectionName": "results",
+      "createIfNotExists": true,
+      "connectionStringSetting": "CosmosDBConnection",
+      "direction": "out"
+    }
+  ]
 }
