@@ -5,7 +5,7 @@ from azure.core.credentials import AzureKeyCredential
 from datetime import datetime
 import base64
 
-def main(inputBlob: func.InputStream, outputDocument: func.Out[dict]):
+def main(inputEvent: func.EventGridEvent, inputBlob: func.InputStream, outputDocument: func.Out[dict]):
 
     logging.info(f"Triggered for blob: {inputBlob.name} ({inputBlob.length} bytes)")
 
